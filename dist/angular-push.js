@@ -95,7 +95,8 @@ angular.module('PlPush', ['ngCordova']);
     var service = {
       ensureRegistration: ensureRegistration,
       getToken: getToken,
-      onMessage: onMessage
+      onMessage: onMessage,
+      onError: onError
     };
 
     return service;
@@ -109,6 +110,14 @@ angular.module('PlPush', ['ngCordova']);
       $rootScope.$on('$cordovaPushV5:notificationReceived', function(event, notification){
         $rootScope.$applyAsync(function(){
           cb(notification);
+        });
+      });
+    }
+
+    function onError(cb) {
+      $rootScope.$on('$cordovaPushV5:errorOccurred', function(event, error){
+        $rootScope.$applyAsync(function(){
+          cb(error);
         });
       });
     }
